@@ -6,7 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ConnectionContex>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Gera uma chave aleatória 256 bits (32 bytes) ao iniciar a aplicação
 var keyBytes = new byte[32];
@@ -51,6 +56,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 
 // Configuração do EF (ajuste sua connection string)
 builder.Services.AddDbContext<ConnectionContex>(options =>
